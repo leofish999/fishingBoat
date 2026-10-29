@@ -9,8 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <style>
     :root {
+      --heaven: #FFF4D6;
       --sky: #EAF3F6;
       --paper: #F7FBFC;
       --ink: #24323A;
@@ -21,6 +23,7 @@
       --body-dark: #5FAF9D;
       --tire: #2A2F35;
       --line: #C9DCE2;
+      --cloud: #FFFFFF;
       color-scheme: light;
       box-sizing: border-box;
       padding-top: env(safe-area-inset-top, 0px);
@@ -29,6 +32,8 @@
 
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
+        --cloud: #D9E2EA;
+        --heaven: #2A2C40;
         --sky: #172027;
         --paper: #1E2930;
         --ink: #E4ECEF;
@@ -43,7 +48,19 @@
       }
     }
 
+     .animate__backOutRight {
+      display: inline-block;
+      margin: 0 0.5rem;
+
+      animation: backOutRight;
+      /* referring directly to the animation's @keyframe declaration */
+      animation-duration: 10s;
+      /* don't forget to set a duration! */
+    } 
+
     :root[data-theme="dark"] {
+      --cloud: #D9E2EA;
+      --heaven: #2A2C40;
       --sky: #172027;
       --paper: #1E2930;
       --ink: #E4ECEF;
@@ -160,6 +177,64 @@
       margin-top: 36px;
       color: var(--soft);
       font-size: .9rem
+    }
+
+    .cloud {
+      position: absolute;
+      background: var(--cloud);
+      border-radius: 999px;
+      height: 34px
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: "";
+      position: absolute;
+      background: var(--cloud);
+      border-radius: 50%
+    }
+
+    .cloud::before {
+      width: 46px;
+      height: 46px;
+      left: 20px;
+      top: -24px
+    }
+
+    .cloud::after {
+      width: 62px;
+      height: 62px;
+      right: 18px;
+      top: -34px
+    }
+
+    .c1 {
+      width: 150px;
+      left: -10px;
+      bottom: 46px;
+      opacity: .85
+    }
+
+    .c2 {
+      width: 170px;
+      right: -14px;
+      bottom: 30px;
+      opacity: .85
+    }
+
+    .c3 {
+      width: 110px;
+      left: 58%;
+      top: 6px;
+      opacity: .6
+    }
+
+    .c4 {
+      width: 230px;
+      left: 50%;
+      margin-left: -115px;
+      bottom: 4px;
+      z-index: 3
     }
 
     /* Journey */
@@ -295,11 +370,37 @@
     }
 
     /* Ending */
+    .heaven {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(to bottom, var(--sky) 0%, var(--heaven) 40%, var(--heaven) 100%)
+    }
+
+    .heaven-scene {
+      position: relative;
+      height: 300px;
+      max-width: 440px;
+      margin: 0 auto 10px
+    }
+
+    .angel {
+      position: absolute;
+      left: 50%;
+      top: 30px;
+      width: min(300px, 74vw);
+      height: auto;
+      overflow: visible;
+      z-index: 2;
+      transform: translateX(-50%);
+      animation: float 4s ease-in-out infinite
+    }
+
     .end {
       text-align: center;
-      padding: 40px 20px 96px;
+      padding: 40px 20px 110px;
       max-width: 640px;
-      margin: 0 auto
+      margin: 0 auto;
+      position: relative
     }
 
     .end h2 {
@@ -501,7 +602,7 @@
       <svg viewBox="0 0 320 220" role="img" aria-label="她騎著圓圓的薄荷色機車">
         <use href="#scooter-rider" />
       </svg>
-      <h1 data-key="title">她的漁船</h1>
+      <h1 data-key="title">魚魚的漁船</h1>
       <p data-key="subtitle">從牽車那天，到最後一程</p>
       <p class="scroll-hint">往下滑，陪它再騎一次</p>
     </div>
@@ -518,9 +619,9 @@
     <section class="stop">
       <span class="km" aria-hidden="true">1</span>
       <time data-key="t1">2024 年</time>
-      <h2 data-key="h1">牽車那天</h2>
-      <p data-key="p1">那天是我陪她去買的。一排新車裡，她一眼就看中了這台Vinoora。圓圓的車頭，像一張笑臉；搭上它的顏色，怎麼看都順眼。</p>
-      <p data-key="p1b">像是跟它約好了要一起走兩年，她選了漁船。</p>
+      <h2 data-key="h1">初次相遇</h2>
+      <p data-key="p1">那天是我陪魚魚去買的。一排新車裡，魚魚一眼就看中了這台Vinoora。圓圓的車頭，像一張笑臉；搭上它的顏色，怎麼看都順眼。</p>
+      <p data-key="p1b">像是跟它約好了要一起走兩年，魚魚選了漁船。</p>
       <!-- <ul class="specs" aria-label="車款配備">
         <li>Vinoora 125</li>
         <li>晶片鑰匙版</li>
@@ -531,34 +632,34 @@
 
     <section class="stop">
       <span class="km" aria-hidden="true">2</span>
-      <time data-key="t2">交車當天</time>
-      <h2 data-key="h2">第一次發動</h2>
-      <p data-key="p2">晶片鑰匙一靠近，輕輕一轉，儀表亮起來。每段路她都騎得很小心，像怕把新車弄痛了。</p>
+      <time data-key="t2">初試啼聲</time>
+      <h2 data-key="h2">漁船的處女秀</h2>
+      <p data-key="p2">晶片鑰匙一靠近，輕輕一轉，儀表亮起來。在將漁船騎回家的上，每條路魚魚都騎得小心翼翼，深怕新車弄壞了。</p>
     </section>
 
     <section class="stop">
       <span class="km" aria-hidden="true">3</span>
       <time data-key="t3">每一天</time>
-      <h2 data-key="h3">她的日常</h2>
+      <h2 data-key="h3">魚魚的日常</h2>
       <p data-key="p3">上班、下班、買生魚片，下雨天的雨衣和晴天的安全帽。它不大，剛好裝得下她的每一天。</p>
       <figure class="photo">
         <img src="wife.jpg" alt="她站在街角的照片" width="720" height="960" loading="lazy">
-        <figcaption class="hand" data-key="cap1">她，和她每天騎過的街</figcaption>
+        <figcaption class="hand" data-key="cap1">她，和漁船每天騎過的街</figcaption>
       </figure>
     </section>
 
     <section class="stop">
       <span class="km" aria-hidden="true">4</span>
       <time data-key="t4">週末</time>
-      <h2 data-key="h4">小旅行</h2>
-      <p data-key="p4">沿著河堤吹風，找一間沒去過的小店。很多平凡又好笑的回憶，都是坐在它身上發生的。</p>
+      <h2 data-key="h4">小確幸</h2>
+      <p data-key="p4">沿著河堤吹風，找一間沒去過的小店。藏著許多平凡又好笑的回憶，魚魚騎著她嘴角總是洋溢著藏不住的開心。</p>
     </section>
 
     <section class="stop crash">
       <span class="km" aria-hidden="true">5</span>
       <time data-key="t5">2026 年的那一天</time>
-      <h2 data-key="h5">車禍</h2>
-      <p data-key="p5">那天她騎著漁船綠燈起步，但是有不守規矩的壞吉普車，迎面撞過來，</p>
+      <h2 data-key="h5">英勇犧牲</h2>
+      <p data-key="p5">那天她騎著漁船綠燈起步，但是有不守規矩的壞吉普車，迎面撞過來。</p>
       <p data-key="p5b">為了守護她，漁船英勇犧牲了</p>
     </section>
 
@@ -566,19 +667,46 @@
       <span class="km" aria-hidden="true">6</span>
       <time data-key="t6">報廢那天</time>
       <h2 data-key="h6">最後一程</h2>
-      <p data-key="p6">把置物箱裡的東西一件件拿出來，最後再看一眼那為了救主人而英勇犧牲的車子。它陪她的時間不算長，但每一公里都是真的。</p>
+      <p data-key="p6">把置物箱裡的東西一件件拿出來，最後再看一眼那為了救主人而英勇犧牲的車子。它陪魚魚的時間不算長，但每一公里都是真的。</p>
     </section>
   </main>
+  <footer class="heaven">
+    <div class="end" id="end">
+      <div class="heaven-scene" aria-hidden="true">
+        <div class="stars"><span style="left:12%;top:18%"></span><span
+            style="left:84%;top:12%;animation-delay:1s"></span><span
+            style="left:72%;top:44%;animation-delay:2s"></span><span
+            style="left:22%;top:52%;animation-delay:1.5s"></span></div>
+        <div class="cloud c3"></div>
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <svg class="angel" viewBox="-40 -60 400 290">
+          <path class="wing" d="M118 112 Q88 54 38 44 Q53 62 40 70 Q63 76 52 88 Q78 92 70 104 Q96 104 118 122 Z"
+            fill="var(--cloud)" stroke="var(--line)" stroke-width="2" opacity=".6" transform="translate(18 -8)" />
+          <use href="#scooter" width="320" height="220" />
+          <path class="wing" d="M118 112 Q88 54 38 44 Q53 62 40 70 Q63 76 52 88 Q78 92 70 104 Q96 104 118 122 Z"
+            fill="var(--cloud)" stroke="var(--line)" stroke-width="2" />
+          <ellipse class="halo" cx="130" cy="52" rx="46" ry="9" fill="none" stroke="var(--lane)" stroke-width="6" />
+        </svg>
+        <div class="cloud c4"></div>
+      </div>
+      <h2 data-key="endTitle">謝謝你，載魚魚走過的每一段路</h2>
+      <p data-key="endText">辛苦了，漁船。以後換你在雲上慢慢騎。</p>
+      <button class="horn" id="horn" type="button">按喇叭說再見</button>
+      <div class="bye hand" id="bye" aria-live="polite"></div>
 
-  <footer class="end" id="end">
+    </div>
+  </footer>
+
+  <!-- <footer class="end" id="end">
     <svg viewBox="0 0 320 220" aria-hidden="true">
       <use href="#scooter" />
     </svg>
-    <h2 data-key="endTitle">謝謝你，載她走過的每一段路</h2>
+    <h2 data-key="endTitle">謝謝你，載魚魚走過的每一段路</h2>
     <p data-key="endText">辛苦了，漁船。</p>
     <button class="horn" id="horn" type="button">按喇叭說再見</button>
     <div class="bye hand" id="bye" aria-live="polite"></div>
-  </footer>
+  </footer> -->
 
   <div class="tools" style="display: none;">
     <button type="button" id="editBtn" aria-pressed="false">編輯文字</button>
@@ -590,16 +718,16 @@
       var KEY = 'vinoora-story-v1';
       var nodes = [].slice.call(document.querySelectorAll('[data-key]'));
       var original = {};
-      nodes.forEach(function (n) {original[n.dataset.key] = n.textContent});
+      nodes.forEach(function (n) { original[n.dataset.key] = n.textContent });
 
       var saved = {};
-      try {saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}} catch (e) {saved = {}}
-      nodes.forEach(function (n) {if (typeof saved[n.dataset.key] === 'string' && saved[n.dataset.key].trim()) n.textContent = saved[n.dataset.key]});
+      try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {} } catch (e) { saved = {} }
+      nodes.forEach(function (n) { if (typeof saved[n.dataset.key] === 'string' && saved[n.dataset.key].trim()) n.textContent = saved[n.dataset.key] });
 
       function save() {
         var data = {};
-        nodes.forEach(function (n) {data[n.dataset.key] = n.textContent});
-        try {localStorage.setItem(KEY, JSON.stringify(data))} catch (e) { }
+        nodes.forEach(function (n) { data[n.dataset.key] = n.textContent });
+        try { localStorage.setItem(KEY, JSON.stringify(data)) } catch (e) { }
       }
 
       var editBtn = document.getElementById('editBtn'), resetBtn = document.getElementById('resetBtn');
@@ -610,20 +738,20 @@
         resetBtn.hidden = !on;
         document.body.classList.toggle('editing', on);
         nodes.forEach(function (n) {
-          if (on) {n.setAttribute('contenteditable', 'plaintext-only'); if (n.contentEditable !== 'plaintext-only') n.setAttribute('contenteditable', 'true')}
+          if (on) { n.setAttribute('contenteditable', 'plaintext-only'); if (n.contentEditable !== 'plaintext-only') n.setAttribute('contenteditable', 'true') }
           else n.removeAttribute('contenteditable');
         });
         if (!on) save();
       });
-      nodes.forEach(function (n) {n.addEventListener('input', save)});
+      nodes.forEach(function (n) { n.addEventListener('input', save) });
       resetBtn.addEventListener('click', function () {
         if (!confirm('要把所有文字恢復成原本的版本嗎？')) return;
-        nodes.forEach(function (n) {n.textContent = original[n.dataset.key]});
-        try {localStorage.removeItem(KEY)} catch (e) { }
+        nodes.forEach(function (n) { n.textContent = original[n.dataset.key] });
+        try { localStorage.removeItem(KEY) } catch (e) { }
       });
 
       // Headlight turns on once at load
-      requestAnimationFrame(function () {document.getElementById('hero').classList.add('on')});
+      requestAnimationFrame(function () { document.getElementById('hero').classList.add('on') });
 
       // Scooter rides down the road
       var journey = document.getElementById('journey'), rider = document.getElementById('rider');
@@ -635,7 +763,7 @@
         rider.style.transform = 'translateY(' + (p * travel) + 'px)';
       }
       var ticking = false;
-      window.addEventListener('scroll', function () {if (!ticking) {ticking = true; requestAnimationFrame(function () {ride(); ticking = false})} }, {passive: true});
+      window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { ride(); ticking = false }) } }, { passive: true });
       window.addEventListener('resize', ride);
       ride();
 
@@ -654,6 +782,9 @@
         try {
           ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
           var t = ctx.currentTime + .02; beep(t, .18); beep(t + .28, .32);
+          const heaven =document.querySelector('.heaven-scene')
+          heaven.classList.add('animate__animated')
+          heaven.classList.add('animate__backOutRight')
         } catch (e) { }
         end.classList.remove('flash'); void end.offsetWidth; end.classList.add('flash');
         bye.textContent = '叭叭！一路好走。';
