@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --heaven: #FFF4D6;
@@ -155,6 +156,19 @@
 
     .on .lamp {
       animation: lamp .3s steps(1) .9s forwards
+    }
+
+    .boat-name {
+      font-family: "LXGW WenKai TC", "Huninn", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 1.4rem;
+    }
+
+    .boat-name span {
+      font-weight: 700;
+      /* font-size: 1.3em; */
+      color: var(--body-dark);
+      /* 用車身的綠色突顯名字 */
+      letter-spacing: .08em;
     }
 
     @keyframes beam {
@@ -621,7 +635,8 @@
       <time data-key="t1">2024 年</time>
       <h2 data-key="h1">初次相遇</h2>
       <p data-key="p1">那天是我陪魚魚去買的。一排新車裡，魚魚一眼就看中了這台Vinoora。圓圓的車頭，像一張笑臉；搭上它的顏色，怎麼看都順眼。</p>
-      <p data-key="p1b">像是跟它約好了要一起走兩年，魚魚選了漁船。</p>
+      <p data-key="p1b">像是跟它約好了要一起走兩年，魚魚選了它，並為它取名字。</p>
+      <p data-key="p1b" class="boat-name">就叫它<span>漁船</span>吧。</p>
       <!-- <ul class="specs" aria-label="車款配備">
         <li>Vinoora 125</li>
         <li>晶片鑰匙版</li>
@@ -652,7 +667,7 @@
       <span class="km" aria-hidden="true">4</span>
       <time data-key="t4">週末</time>
       <h2 data-key="h4">小確幸</h2>
-      <p data-key="p4">沿著河堤吹風，找一間沒去過的小店。藏著許多平凡又好笑的回憶，魚魚騎著她嘴角總是洋溢著藏不住的開心。</p>
+      <p data-key="p4">沿著河堤吹風，找一間沒去過的小店。藏著許多平凡又好笑的回憶，魚魚騎著它嘴角總是洋溢著藏不住的開心。</p>
     </section>
 
     <section class="stop crash">
@@ -790,7 +805,7 @@
           function handleAnimationEnd(event) {
             event.stopPropagation();
             // node.remove();
-            node.style.visibility="hidden";
+            node.style.visibility = "hidden";
             resolve('Animation ended');
           }
 
@@ -800,7 +815,7 @@
         try {
           ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
           var t = ctx.currentTime + .02; beep(t, .18); beep(t + .28, .32);
-          animateCSS('.heaven-scene','backOutRight');
+          animateCSS('.heaven-scene', 'backOutRight');
           // const heaven = document.querySelector('.heaven-scene')
           // heaven.classList.add('animate__animated')
           // heaven.classList.add('animate__backOutRight')
