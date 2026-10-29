@@ -48,7 +48,7 @@
       }
     }
 
-     .animate__backOutRight {
+    .animate__backOutRight {
       display: inline-block;
       margin: 0 0.5rem;
 
@@ -56,7 +56,7 @@
       /* referring directly to the animation's @keyframe declaration */
       animation-duration: 10s;
       /* don't forget to set a duration! */
-    } 
+    }
 
     :root[data-theme="dark"] {
       --cloud: #D9E2EA;
@@ -778,13 +778,32 @@
         o.connect(g); o2.connect(g); g.connect(ctx.destination);
         o.start(t); o2.start(t); o.stop(t + dur); o2.stop(t + dur);
       }
+      const animateCSS = (element, animation, prefix = 'animate__') =>
+        // We create a Promise and return it
+        new Promise((resolve, reject) => {
+          const animationName = `${prefix}${animation}`;
+          const node = document.querySelector(element);
+
+          node.classList.add(`${prefix}animated`, animationName);
+
+          // When the animation ends, we clean the classes and resolve the Promise
+          function handleAnimationEnd(event) {
+            event.stopPropagation();
+            // node.remove();
+            node.style.visibility="hidden";
+            resolve('Animation ended');
+          }
+
+          node.addEventListener('animationend', handleAnimationEnd, { once: true });
+        });
       horn.addEventListener('click', function () {
         try {
           ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
           var t = ctx.currentTime + .02; beep(t, .18); beep(t + .28, .32);
-          const heaven =document.querySelector('.heaven-scene')
-          heaven.classList.add('animate__animated')
-          heaven.classList.add('animate__backOutRight')
+          animateCSS('.heaven-scene','backOutRight');
+          // const heaven = document.querySelector('.heaven-scene')
+          // heaven.classList.add('animate__animated')
+          // heaven.classList.add('animate__backOutRight')
         } catch (e) { }
         end.classList.remove('flash'); void end.offsetWidth; end.classList.add('flash');
         bye.textContent = '叭叭！一路好走。';
