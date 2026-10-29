@@ -396,6 +396,28 @@
       max-width: 440px;
       margin: 0 auto 10px
     }
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(-50%, 0)
+      }
+
+      50% {
+        transform: translate(-50%, -12px)
+      }
+    }
+    @keyframes flap {
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      50% {
+        transform: rotate(-9deg)
+      }
+    }
 
     .angel {
       position: absolute;
@@ -522,6 +544,11 @@
       color: var(--soft);
       font-size: .9rem
     }
+    .wing {
+    transform-box: fill-box;
+    transform-origin: 100% 100%;
+    animation: flap 2.2s ease-in-out infinite;
+}
 
     @media (max-width:560px) {
       body {
