@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>她的 Vinoora：從牽車到最後一程</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --sky: #EAF3F6;
+      --paper: #F7FBFC;
+      --ink: #24323A;
+      --soft: #5B6B73;
+      --road: #3A4149;
+      --lane: #F4C542;
+      --body: #8CCFC0;
+      --body-dark: #5FAF9D;
+      --tire: #2A2F35;
+      --line: #C9DCE2;
+      color-scheme: light;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --sky: #172027;
+        --paper: #1E2930;
+        --ink: #E4ECEF;
+        --soft: #9DB0B8;
+        --road: #0E1317;
+        --lane: #F4C542;
+        --body: #7CC2B3;
+        --body-dark: #5FAF9D;
+        --tire: #0A0D10;
+        --line: #2C3A42;
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --sky: #172027;
+      --paper: #1E2930;
+      --ink: #E4ECEF;
+      --soft: #9DB0B8;
+      --road: #0E1317;
+      --lane: #F4C542;
+      --body: #7CC2B3;
+      --body-dark: #5FAF9D;
+      --tire: #0A0D10;
+      --line: #2C3A42;
+      color-scheme: dark;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    body {
+      margin: 0;
+      background: var(--sky);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 17px;
+      line-height: 1.85;
+    }
+
+    h1,
+    h2,
+    .hand {
+      font-family: "Huninn", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-weight: 400
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--lane);
+      outline-offset: 3px;
+      border-radius: 6px
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      place-items: center;
+      padding: 48px 20px 24px;
+      text-align: center
+    }
+
+    .hero svg {
+      width: min(420px, 86vw);
+      height: auto;
+      overflow: visible;
+      margin-top: 24px
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      line-height: 1.2;
+      margin: 18px 0 6px;
+      letter-spacing: .02em
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--soft);
+      font-size: 1.05rem
+    }
+
+    .beam {
+      opacity: 0;
+      transform-origin: 250px 72px
+    }
+
+    .lamp {
+      fill: #9AA4A8
+    }
+
+    .on .beam {
+      animation: beam 1.4s ease-out .9s forwards
+    }
+
+    .on .lamp {
+      animation: lamp .3s steps(1) .9s forwards
+    }
+
+    @keyframes beam {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: .55
+      }
+    }
+
+    @keyframes lamp {
+      to {
+        fill: var(--lane)
+      }
+    }
+
+    .scroll-hint {
+      margin-top: 36px;
+      color: var(--soft);
+      font-size: .9rem
+    }
+
+    /* Journey */
+    .journey {
+      position: relative;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 20px 40px 104px
+    }
+
+    .road {
+      position: absolute;
+      left: 28px;
+      top: 0;
+      bottom: 0;
+      width: 52px;
+      background: var(--road);
+      border-radius: 26px
+    }
+
+    .road::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 24px;
+      bottom: 24px;
+      width: 4px;
+      margin-left: -2px;
+      background: repeating-linear-gradient(to bottom, var(--lane) 0 18px, transparent 18px 38px)
+    }
+
+    .rider {
+      position: absolute;
+      left: 24px;
+      top: 0;
+      width: 60px;
+      height: 60px;
+      z-index: 2;
+      will-change: transform
+    }
+
+    .rider svg {
+      width: 60px;
+      height: auto;
+      filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .25))
+    }
+
+    .stop {
+      position: relative;
+      padding: 8px 0 64px
+    }
+
+    .stop .km {
+      position: absolute;
+      left: -72px;
+      top: 10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 3px solid var(--lane);
+      display: grid;
+      place-items: center;
+      font-family: "Huninn", sans-serif;
+      font-size: 1.15rem;
+      z-index: 1
+    }
+
+    .stop time {
+      display: block;
+      color: var(--soft);
+      font-size: .92rem
+    }
+
+    .stop h2 {
+      font-size: 1.75rem;
+      line-height: 1.3;
+      margin: 2px 0 10px
+    }
+
+    .stop p {
+      margin: 0 0 .8em;
+      max-width: 34em
+    }
+
+    .specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none
+    }
+
+    .specs li {
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      padding: 2px 14px;
+      font-size: .92rem
+    }
+
+    .photo {
+      margin: 22px 0 4px;
+      max-width: 340px;
+      background: #fff;
+      padding: 12px 12px 6px;
+      border-radius: 4px;
+      transform: rotate(-1.5deg);
+      box-shadow: 0 10px 24px rgba(20, 40, 50, .18)
+    }
+
+    .photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 2px
+    }
+
+    .photo figcaption {
+      color: #3A4449;
+      text-align: center;
+      padding: 8px 0 4px;
+      font-size: 1.05rem
+    }
+
+    .stop.crash h2 {
+      color: var(--soft)
+    }
+
+    .stop.crash .km {
+      border-color: var(--soft)
+    }
+
+    /* Ending */
+    .end {
+      text-align: center;
+      padding: 40px 20px 96px;
+      max-width: 640px;
+      margin: 0 auto
+    }
+
+    .end h2 {
+      font-size: clamp(1.9rem, 5.5vw, 2.6rem);
+      line-height: 1.35;
+      margin: 0 0 12px
+    }
+
+    .end p {
+      color: var(--soft);
+      margin: 0 0 28px
+    }
+
+    .horn {
+      background: var(--lane);
+      color: #2A2A2A;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 30px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      box-shadow: 0 4px 0 #C99E2A
+    }
+
+    .horn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #C99E2A
+    }
+
+    .bye {
+      min-height: 2em;
+      margin-top: 22px;
+      font-size: 1.3rem
+    }
+
+    .end svg {
+      width: min(240px, 60vw);
+      height: auto;
+      margin: 0 auto 18px;
+      display: block;
+      overflow: visible
+    }
+
+    .flash .beam {
+      animation: flash .9s ease-out
+    }
+
+    .flash .lamp {
+      fill: var(--lane)
+    }
+
+    @keyframes flash {
+
+      0%,
+      100% {
+        opacity: 0
+      }
+
+      15%,
+      45% {
+        opacity: .7
+      }
+
+      30% {
+        opacity: .1
+      }
+    }
+
+    /* Edit tools */
+    .tools {
+      position: fixed;
+      right: 16px;
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      gap: 8px;
+      z-index: 5
+    }
+
+    .tools button {
+      background: var(--paper);
+      color: var(--ink);
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: .9rem
+    }
+
+    .tools button[aria-pressed="true"] {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink)
+    }
+
+    .editing [data-key] {
+      outline: 2px dashed var(--lane);
+      outline-offset: 4px;
+      border-radius: 4px;
+      cursor: text
+    }
+
+    .note {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 20px 0 104px;
+      color: var(--soft);
+      font-size: .9rem
+    }
+
+    @media (max-width:560px) {
+      body {
+        font-size: 16px
+      }
+
+      .journey {
+        padding-left: 76px
+      }
+
+      .note {
+        padding-left: 76px
+      }
+
+      .road {
+        left: 16px;
+        width: 40px
+      }
+
+      .rider {
+        left: 10px;
+        width: 52px
+      }
+
+      .rider svg {
+        width: 52px
+      }
+
+      .stop .km {
+        left: -59px;
+        width: 38px;
+        height: 38px;
+        font-size: 1rem
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .on .beam {
+        animation: none;
+        opacity: .55
+      }
+
+      .on .lamp {
+        animation: none;
+        fill: var(--lane)
+      }
+
+      .flash .beam {
+        animation: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="scooter" viewBox="0 0 320 220">
+        <path class="beam" d="M262 72 L330 40 L330 104 Z" fill="var(--lane)" />
+        <circle cx="80" cy="176" r="31" fill="var(--tire)" />
+        <circle cx="80" cy="176" r="12" fill="#C7CED2" />
+        <circle cx="246" cy="176" r="31" fill="var(--tire)" />
+        <circle cx="246" cy="176" r="12" fill="#C7CED2" />
+        <path d="M48 150 Q44 104 92 100 L172 100 Q192 100 197 122 L202 150 Q206 166 190 168 L70 168 Q50 166 48 150 Z"
+          fill="var(--body)" />
+        <path d="M212 156 Q246 128 280 156" fill="none" stroke="var(--body-dark)" stroke-width="12"
+          stroke-linecap="round" />
+        <path d="M186 162 L222 70 Q226 58 238 61 L246 63 Q254 69 250 81 L226 166 Z" fill="var(--body)" />
+        <rect x="76" y="84" width="96" height="20" rx="10" fill="var(--tire)" />
+        <path d="M214 56 L252 50" stroke="var(--tire)" stroke-width="8" stroke-linecap="round" />
+        <circle class="lamp" cx="250" cy="72" r="13" />
+        <circle cx="112" cy="134" r="6" fill="#fff" opacity=".7" />
+      </symbol>
+      <symbol id="scooter-rider" viewBox="0 0 320 220">
+        <use href="#scooter" />
+        <path d="M180 108 L190 150" stroke="#E8C4A8" stroke-width="9" stroke-linecap="round" />
+        <ellipse cx="196" cy="153" rx="11" ry="6" fill="var(--tire)" />
+        <path d="M108 104 Q106 90 116 88 L168 86 Q182 92 192 114 Q150 122 108 104 Z" fill="#8A5A3B" />
+        <path d="M118 90 Q112 62 132 42 L158 40 Q170 60 162 92 Z" fill="#E9DCC3" />
+        <path d="M150 50 Q184 64 212 56" fill="none" stroke="#E9DCC3" stroke-width="11" stroke-linecap="round" />
+        <circle cx="214" cy="56" r="6" fill="#E8C4A8" />
+        <path d="M128 26 Q124 42 136 46 L142 30 Z" fill="#4A3426" />
+        <circle cx="148" cy="22" r="21" fill="#F5F7F8" stroke="#C9D2D7" stroke-width="2" />
+        <path d="M154 12 Q172 15 170 32 L155 32 Z" fill="var(--tire)" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="hero" id="hero">
+    <div>
+      <svg viewBox="0 0 320 220" role="img" aria-label="她騎著圓圓的薄荷色機車">
+        <use href="#scooter-rider" />
+      </svg>
+      <h1 data-key="title">她的漁船</h1>
+      <p data-key="subtitle">從牽車那天，到最後一程</p>
+      <p class="scroll-hint">往下滑，陪它再騎一次</p>
+    </div>
+  </header>
+
+  <!-- <p class="note">故事裡的細節可以按右下角「編輯文字」，換成你們真正的日期和回憶，改完會自動保存在這台裝置上。</p> -->
+
+  <main class="journey" id="journey">
+    <div class="road" aria-hidden="true"></div>
+    <div class="rider" id="rider" aria-hidden="true"><svg viewBox="0 0 320 220">
+        <use href="#scooter-rider" />
+      </svg></div>
+
+    <section class="stop">
+      <span class="km" aria-hidden="true">1</span>
+      <time data-key="t1">2024 年</time>
+      <h2 data-key="h1">牽車那天</h2>
+      <p data-key="p1">那天是我陪她去買的。一排新車裡，她一眼就看中了這台Vinoora。圓圓的車頭，像一張笑臉；搭上它的顏色，怎麼看都順眼。</p>
+      <p data-key="p1b">像是跟它約好了要一起走兩年，她選了漁船。</p>
+      <!-- <ul class="specs" aria-label="車款配備">
+        <li>Vinoora 125</li>
+        <li>晶片鑰匙版</li>
+        <li>碟煞 UBS</li>
+        <li>2026 新色</li>
+      </ul> -->
+    </section>
+
+    <section class="stop">
+      <span class="km" aria-hidden="true">2</span>
+      <time data-key="t2">交車當天</time>
+      <h2 data-key="h2">第一次發動</h2>
+      <p data-key="p2">晶片鑰匙一靠近，輕輕一轉，儀表亮起來。每段路她都騎得很小心，像怕把新車弄痛了。</p>
+    </section>
+
+    <section class="stop">
+      <span class="km" aria-hidden="true">3</span>
+      <time data-key="t3">每一天</time>
+      <h2 data-key="h3">她的日常</h2>
+      <p data-key="p3">上班、下班、買生魚片，下雨天的雨衣和晴天的安全帽。它不大，剛好裝得下她的每一天。</p>
+      <figure class="photo">
+        <img src="wife.jpg" alt="她站在街角的照片" width="720" height="960" loading="lazy">
+        <figcaption class="hand" data-key="cap1">她，和她每天騎過的街</figcaption>
+      </figure>
+    </section>
+
+    <section class="stop">
+      <span class="km" aria-hidden="true">4</span>
+      <time data-key="t4">週末</time>
+      <h2 data-key="h4">小旅行</h2>
+      <p data-key="p4">沿著河堤吹風，找一間沒去過的小店。很多平凡又好笑的回憶，都是坐在它身上發生的。</p>
+    </section>
+
+    <section class="stop crash">
+      <span class="km" aria-hidden="true">5</span>
+      <time data-key="t5">2026 年的那一天</time>
+      <h2 data-key="h5">車禍</h2>
+      <p data-key="p5">那天她騎著漁船綠燈起步，但是有不守規矩的壞吉普車，迎面撞過來，</p>
+      <p data-key="p5b">為了守護她，漁船英勇犧牲了</p>
+    </section>
+
+    <section class="stop">
+      <span class="km" aria-hidden="true">6</span>
+      <time data-key="t6">報廢那天</time>
+      <h2 data-key="h6">最後一程</h2>
+      <p data-key="p6">把置物箱裡的東西一件件拿出來，最後再看一眼那為了救主人而英勇犧牲的車子。它陪她的時間不算長，但每一公里都是真的。</p>
+    </section>
+  </main>
+
+  <footer class="end" id="end">
+    <svg viewBox="0 0 320 220" aria-hidden="true">
+      <use href="#scooter" />
+    </svg>
+    <h2 data-key="endTitle">謝謝你，載她走過的每一段路</h2>
+    <p data-key="endText">辛苦了，漁船。</p>
+    <button class="horn" id="horn" type="button">按喇叭說再見</button>
+    <div class="bye hand" id="bye" aria-live="polite"></div>
+  </footer>
+
+  <div class="tools" style="display: none;">
+    <button type="button" id="editBtn" aria-pressed="false">編輯文字</button>
+    <button type="button" id="resetBtn" hidden>恢復原文</button>
+  </div>
+
+  <script>
+    (function () {
+      var KEY = 'vinoora-story-v1';
+      var nodes = [].slice.call(document.querySelectorAll('[data-key]'));
+      var original = {};
+      nodes.forEach(function (n) {original[n.dataset.key] = n.textContent});
+
+      var saved = {};
+      try {saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}} catch (e) {saved = {}}
+      nodes.forEach(function (n) {if (typeof saved[n.dataset.key] === 'string' && saved[n.dataset.key].trim()) n.textContent = saved[n.dataset.key]});
+
+      function save() {
+        var data = {};
+        nodes.forEach(function (n) {data[n.dataset.key] = n.textContent});
+        try {localStorage.setItem(KEY, JSON.stringify(data))} catch (e) { }
+      }
+
+      var editBtn = document.getElementById('editBtn'), resetBtn = document.getElementById('resetBtn');
+      editBtn.addEventListener('click', function () {
+        var on = editBtn.getAttribute('aria-pressed') !== 'true';
+        editBtn.setAttribute('aria-pressed', on);
+        editBtn.textContent = on ? '完成編輯' : '編輯文字';
+        resetBtn.hidden = !on;
+        document.body.classList.toggle('editing', on);
+        nodes.forEach(function (n) {
+          if (on) {n.setAttribute('contenteditable', 'plaintext-only'); if (n.contentEditable !== 'plaintext-only') n.setAttribute('contenteditable', 'true')}
+          else n.removeAttribute('contenteditable');
+        });
+        if (!on) save();
+      });
+      nodes.forEach(function (n) {n.addEventListener('input', save)});
+      resetBtn.addEventListener('click', function () {
+        if (!confirm('要把所有文字恢復成原本的版本嗎？')) return;
+        nodes.forEach(function (n) {n.textContent = original[n.dataset.key]});
+        try {localStorage.removeItem(KEY)} catch (e) { }
+      });
+
+      // Headlight turns on once at load
+      requestAnimationFrame(function () {document.getElementById('hero').classList.add('on')});
+
+      // Scooter rides down the road
+      var journey = document.getElementById('journey'), rider = document.getElementById('rider');
+      function ride() {
+        var r = journey.getBoundingClientRect();
+        var travel = journey.offsetHeight - 80;
+        var p = (window.innerHeight * 0.5 - r.top) / journey.offsetHeight;
+        p = Math.max(0, Math.min(1, p));
+        rider.style.transform = 'translateY(' + (p * travel) + 'px)';
+      }
+      var ticking = false;
+      window.addEventListener('scroll', function () {if (!ticking) {ticking = true; requestAnimationFrame(function () {ride(); ticking = false})} }, {passive: true});
+      window.addEventListener('resize', ride);
+      ride();
+
+      // Horn
+      var horn = document.getElementById('horn'), bye = document.getElementById('bye'), end = document.getElementById('end');
+      var ctx = null;
+      function beep(t, dur) {
+        var o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
+        o.type = 'square'; o2.type = 'square'; o.frequency.value = 420; o2.frequency.value = 510;
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.12, t + .02);
+        g.gain.setValueAtTime(.12, t + dur - .03); g.gain.linearRampToValueAtTime(0, t + dur);
+        o.connect(g); o2.connect(g); g.connect(ctx.destination);
+        o.start(t); o2.start(t); o.stop(t + dur); o2.stop(t + dur);
+      }
+      horn.addEventListener('click', function () {
+        try {
+          ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+          var t = ctx.currentTime + .02; beep(t, .18); beep(t + .28, .32);
+        } catch (e) { }
+        end.classList.remove('flash'); void end.offsetWidth; end.classList.add('flash');
+        bye.textContent = '叭叭！一路好走。';
+      });
+    })();
+  </script>
+</body>
+
+</html>
