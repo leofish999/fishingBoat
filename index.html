@@ -695,7 +695,8 @@
         <div class="cloud c3"></div>
         <div class="cloud c1"></div>
         <div class="cloud c2"></div>
-        <svg class="angel" viewBox="-40 -60 400 290">
+        <span class="angel-box">
+          <svg class="angel" viewBox="-40 -60 400 290">
           <path class="wing" d="M118 112 Q88 54 38 44 Q53 62 40 70 Q63 76 52 88 Q78 92 70 104 Q96 104 118 122 Z"
             fill="var(--cloud)" stroke="var(--line)" stroke-width="2" opacity=".6" transform="translate(18 -8)" />
           <use href="#scooter" width="320" height="220" />
@@ -703,6 +704,8 @@
             fill="var(--cloud)" stroke="var(--line)" stroke-width="2" />
           <ellipse class="halo" cx="130" cy="52" rx="46" ry="9" fill="none" stroke="var(--lane)" stroke-width="6" />
         </svg>
+        </span>
+        
         <div class="cloud c4"></div>
       </div>
       <h2 data-key="endTitle">謝謝你，載魚魚走過的每一段路</h2>
@@ -815,7 +818,7 @@
         try {
           ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
           var t = ctx.currentTime + .02; beep(t, .18); beep(t + .28, .32);
-          animateCSS('.heaven-scene', 'backOutRight');
+          animateCSS('.angel-box', 'backOutRight');
           // const heaven = document.querySelector('.heaven-scene')
           // heaven.classList.add('animate__animated')
           // heaven.classList.add('animate__backOutRight')
